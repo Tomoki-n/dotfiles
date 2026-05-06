@@ -1,21 +1,31 @@
+# Kiro CLI pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh"
 # Path to your oh-my-zsh configuration.
-source $HOME/src/github.com/zsh-users/antigen/antigen.zsh
+antigen_path="${HOME}/src/github.com/zsh-users/antigen/antigen.zsh"
 
-antigen use oh-my-zsh
+if [[ -r "${antigen_path}" ]]; then
+    source "${antigen_path}"
 
-antigen bundle git
-antigen bundle mvn
-antigen bundle golang
-antigen theme candy
+    antigen use oh-my-zsh
 
-antigen apply
+    antigen bundle git
+    antigen bundle mvn
+    antigen bundle golang
+    antigen theme candy
+
+    antigen apply
+fi
 
 # for homebrew
-export PATH=$PATH:/usr/local/bin
+for brew_prefix in /opt/homebrew /usr/local; do
+    [[ -d "${brew_prefix}/bin" ]] && path+=("${brew_prefix}/bin")
+    [[ -d "${brew_prefix}/sbin" ]] && path+=("${brew_prefix}/sbin")
+done
+typeset -U path
 
 # historical backward/forward search with linehead string binded to ^P/^N
 #
-autoload history-search-end
+autoload -Uz history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 bindkey "^p" history-beginning-search-backward-end
@@ -45,16 +55,17 @@ zshaddhistory() {
 
 alias p="popd"
 
-if [ -x "`which go`" ]; then
+if command -v go >/dev/null 2>&1; then
     # http://blog.kentarok.org/entry/2014/06/03/135300
-    export GOPATH=$HOME
-    export PATH=$PATH::$GOPATH/bin
+    export GOPATH=${GOPATH:-$HOME}
+    path+=("${GOPATH}/bin")
+    typeset -U path
 fi
 
 # http://d.hatena.ne.jp/kbkbkbkb1/20120429/1335835500
 function peco_select_history() {
   local tac_cmd
-  which gtac &> /dev/null && tac_cmd=gtac || tac_cmd=tac
+  command -v gtac >/dev/null 2>&1 && tac_cmd=gtac || tac_cmd=tac
   BUFFER=$($tac_cmd ~/.zsh_history | sed 's/^: [0-9]*:[0-9]*;//' \
     | peco --query "$LBUFFER")
   CURSOR=$#BUFFER         # move cursor
@@ -79,4 +90,9 @@ bindkey '^S' peco_src
 # Customize to your needs...
 #
 #
-figlet tomoki-n
+if command -v figlet >/dev/null 2>&1; then
+    figlet tomoki-n
+fi
+
+# Kiro CLI post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"

@@ -5,11 +5,18 @@ Installation
 $ make install
 ```
 
+To install GUI apps managed by Homebrew Cask, run:
+
+```
+$ make cask
+```
+
 Prerequisite
 ============
 
-* Latest Golang
-* vim 8.0+
+* Latest Go
+* Vim 8.0+
+* Homebrew
 
 How to use
 ==========
@@ -17,9 +24,9 @@ How to use
 zsh
 ---
 
-Using [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) with antigen.
+Using [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) with antigen.
 
-[peco](https://github.com/peco/peco) and [ghq](https://github.com/motemen/ghq) are used for exploring `src` directory with `GOPATH` style.
+[peco](https://github.com/peco/peco) and [ghq](https://github.com/x-motemen/ghq) are used for exploring `src` directory with `GOPATH` style.
 
 ### Tips
 

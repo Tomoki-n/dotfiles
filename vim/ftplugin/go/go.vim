@@ -27,10 +27,7 @@ let g:tagbar_type_go = {
 \ }
 
 " golang
-if $GOROOT != ''
-  exe "set rtp+=".globpath($GOPATH, "src/github.com/nsf/gocode/vim")
-  autocmd FileType go :set completeopt=menu,preview
-endif
+setlocal completeopt=menu,preview
 
 " indent
 au BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4

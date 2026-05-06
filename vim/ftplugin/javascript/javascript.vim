@@ -1,7 +1,11 @@
 " ==========
 " javascript
 " ==========
-compiler javascriptlint
+if executable('eslint')
+  compiler eslint
+else
+  compiler javascriptlint
+endif
 
 if !exists('b:undo_ftplugin')
     let b:undo_ftplugin = ''

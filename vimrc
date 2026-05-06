@@ -16,7 +16,7 @@ call plug#begin()
 
 "Plugin Installing
 Plug 'mattn/webapi-vim'
-Plug 'vim-scripts/The-NERD-Commenter'
+Plug 'preservim/nerdcommenter'
 Plug 'mattn/gist-vim'
 Plug 'mattn/emmet-vim'
 Plug 'altercation/vim-colors-solarized'
@@ -29,11 +29,12 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mileszs/ack.vim'
 Plug 'Shougo/vimproc.vim'
 Plug 'mattn/ctrlp-ghq'
-Plug 'majutsushi/tagbar'
+Plug 'preservim/tagbar'
 Plug 'mattn/sonictemplate-vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'justinmk/vim-dirvish'
-Plug 'plasticboy/vim-markdown'
+Plug 'godlygeek/tabular'
+Plug 'preservim/vim-markdown'
 Plug 'uarun/vim-protobuf'
 
 Plug 'tomtom/tlib_vim'
@@ -308,7 +309,9 @@ noremap <leader>t :<c-u>TagbarToggle<cr>
 " =====================================================
 "" ack.vim
 " =====================================================
-if executable('ag')
+if executable('rg')
+    let g:ackprg = 'rg --vimgrep'
+elseif executable('ag')
     let g:ackprg = 'ag --vimgrep'
 endif
 

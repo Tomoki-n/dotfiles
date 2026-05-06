@@ -16,7 +16,7 @@
     path = ~/.gitconfig.local
 [push]
     # push only the current branch
-    default = tracking
+    default = upstream
 [branch]
     # autosetuprebase = always
 [merge]
